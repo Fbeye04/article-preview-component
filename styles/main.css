@@ -34,18 +34,19 @@ main {
 }
 
 .card {
-  background-color: white;
-  width: 21rem;
-  margin: 2rem;
-  border-radius: 1rem;
-  box-shadow: 0.1rem 0.1rem 0.5rem 0.1rem var(--very-dark-grayish-blue);
   display: flex;
-  flex-direction: column;
+  background-color: white;
+  flex-direction: row;
+  width: 46rem;
+  transition: 5ms ease-in-out;
+  box-shadow: 0.1rem 0.1rem 0.5rem 0.1rem var(--very-dark-grayish-blue);
+  border-radius: 1rem;
 }
 
 .card .card-img img {
-  border-radius: 1rem 1rem 0 0;
-  width: 21rem;
+  width: 100%;
+  height: 100%;
+  border-radius: 1rem 0 0 1rem;
 }
 
 .card .card-description {
@@ -67,50 +68,122 @@ main {
   font-weight: 500;
 }
 
-.card .card-description .card-profile {
+.card-profile {
   display: flex;
   justify-content: space-between;
   margin: 1rem 0;
 }
 
-.card .card-description .card-profile .avatar-profile {
+.card-profile .avatar-profile {
   display: flex;
   flex-direction: row;
   gap: 1rem;
 }
 
-.card .card-description .card-profile .avatar-profile #avatar {
+.card-profile .avatar-profile #avatar {
   width: 2.5rem;
   border-radius: 50%;
 }
 
-.card .card-description .card-profile .avatar-profile hgroup h2,
-.card .card-description .card-profile .avatar-profile hgroup p {
+.card-profile .avatar-profile hgroup h2,
+.card-profile .avatar-profile hgroup p {
   font-size: 0.9rem;
 }
 
-.card .card-description .card-profile .avatar-profile hgroup h2 {
+.card-profile .avatar-profile hgroup h2 {
   color: var(--very-dark-grayish-blue);
   font-weight: 700;
 }
 
-.card .card-description .card-profile .avatar-profile hgroup p {
+.card-profile .avatar-profile hgroup p {
   color: var(--grayish-blue);
 }
 
-.card .card-description .card-profile .share-container {
-  background-color: var(--light-grayish-blue);
-  width: 2rem;
+.share-container {
   position: relative;
-  border-radius: 50%;
 }
 
-.card .card-description .card-profile .share-container img {
+.share-button {
+  background-color: var(--light-grayish-blue);
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.share-button:hover {
+  background-color: var(--desaturated-dark-blue);
+}
+
+.share-button img {
   width: 1rem;
+}
+
+.share-popup {
   position: absolute;
-  top: 0.7rem;
-  right: 1rem;
-  left: 0.6rem;
+  bottom: 3.5rem;
+  right: -6.8rem;
+  background-color: var(--very-dark-grayish-blue);
+  padding: 1rem 2rem;
+  border-radius: 0.6rem;
+  display: none;
+  align-items: center;
+  gap: 1rem;
+}
+
+.share-popup p {
+  color: var(--grayish-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.3rem;
+  font-size: 0.8rem;
+}
+
+.share-popup .social-buttons ul {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+}
+
+.share-popup .social-buttons .icons {
+  color: white;
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+}
+
+.share-popup .social-buttons .icons:hover {
+  color: var(--grayish-blue);
+}
+
+/* Cara lain menggunakan border */
+.share-popup-arrow {
+  position: absolute;
+  bottom: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 0.5rem solid transparent;
+  border-right: 0.5rem solid transparent;
+  border-top: 0.5rem solid var(--very-dark-grayish-blue);
+}
+
+/* Class untuk menampilkan popup */
+.share-popup.active {
+  display: flex;
+}
+
+/* Style untuk share button active */
+.share-button.active {
+  background-color: var(--desaturated-dark-blue);
+}
+
+.share-button.active img {
+  filter: brightness(0) invert(1);
 }
 
 .attribution {
@@ -131,16 +204,90 @@ main {
   color: hsl(228, 45%, 44%);
 }
 
-@media (min-width: 55rem) {
+@media (max-width: 55rem) {
   .card {
-    flex-direction: row;
-    width: 46rem;
-    transition: 5ms ease-in-out;
+    width: 21rem;
+    margin: 2rem;
+
+    flex-direction: column;
   }
 
   .card .card-img img {
-    width: 100%;
-    height: 100%;
-    border-radius: 1rem 0 0 1rem;
+    border-radius: 1rem 1rem 0 0;
+    width: 21rem;
+  }
+
+  .card .card-description {
+    padding-bottom: 0;
+  }
+
+  .card .card-description .card-profile {
+    position: relative;
+  }
+
+  /* Styling untuk share container */
+  .share-container {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Update styling untuk share popup */
+  .share-popup {
+    position: absolute;
+    bottom: -1rem;
+    right: -2rem;
+    padding: 1rem 2rem 1.5rem 2rem;
+    background-color: var(--very-dark-grayish-blue);
+    width: 21rem;
+    border-radius: 0 0 1rem 1rem;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1.5rem;
+    display: none;
+  }
+
+  /* Hapus transform karena kita sudah menggunakan top positioning */
+
+  .share-popup.active {
+    display: flex;
+  }
+
+  .share-popup p {
+    color: var(--grayish-blue);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.3rem;
+  }
+
+  .share-popup .social-buttons ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .share-popup .social-buttons .icons {
+    color: white;
+    font-size: 1.2rem;
+  }
+
+  /* Style untuk profile saat share active */
+  .card-profile.active .avatar-profile {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+  }
+
+  /* Pastikan share button tetap terlihat */
+  .share-button {
+    position: relative;
+    z-index: 3; /* Nilai z-index lebih tinggi dari popup */
+  }
+
+  /* Hapus arrow di mobile */
+  .share-popup-arrow {
+    display: none;
   }
 }
