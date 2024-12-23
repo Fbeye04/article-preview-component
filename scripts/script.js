@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
     toggleShare();
   });
 
-  // Menutup popup ketika mengklik di luar
+  // Closing the popup when clicking outside
   document.addEventListener("click", function (event) {
     if (
       !shareButton.contains(event.target) &&
